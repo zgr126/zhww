@@ -1,12 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
-  <div>
-    <router></router>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div>home</div>
 </template>
 
 <style scoped>
