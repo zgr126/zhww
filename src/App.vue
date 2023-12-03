@@ -1,15 +1,24 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <router></router>
+  <div class="router">
+    <router-view ></router-view>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div id="navBtn">
+    <button>首页</button>
+    <button>我的</button>
+  </div>
 </template>
 
-<style scoped>
+<style scoped lang="stylus">
+.router
+  flex auto
+#navBtn
+  button
+    width 50%
+    height 2.5em
+    font-size 3em
 .logo {
   height: 6em;
   padding: 1.5em;
