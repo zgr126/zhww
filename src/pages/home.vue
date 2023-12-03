@@ -3,8 +3,8 @@
 </script>
 
 <template>
+  <img src="/img/logo.png" class="logo">
   <div class="body">
-    <img src="/img/logo.png" class="logo">
     <div>
       <img src="/img/bk.png" />
     </div>

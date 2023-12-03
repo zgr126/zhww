@@ -13,7 +13,9 @@
 
 <style scoped lang="stylus">
 .router
+  display flex
   flex auto
+  height 0
 #navBtn
   button
     width 50%
