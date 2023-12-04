@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import Lst from './lst.vue'
 let route = useRoute()
 let router = useRouter()
 let wwLst = ref([
@@ -34,43 +33,66 @@ let back = e => {
 </script>
 
 <template>
-  <div id="navBtn">
-    <button class="blackBtn" @click="back">返回</button>
-    <button>{{ searchVal }}</button>
-  </div>
-  <div id="body">
-    <div id="quicksearchbar">
-      <button v-for="(item, index) of quikSearchLst">
-        <span>{{ item }}</span>
+  <div id="wwlist">
+    <div id="wwBox">
+      <button v-for="(item, index) of wwLst" @click="showDetails(item)">
+        <img :src="item.url">
       </button>
     </div>
-    <Lst></Lst>
+    <div id="details" v-if="detailsItem" @click="closeDetails">
+      <img :src="detailsItem.url" />
+      <div id="handlebar">
+        <img src="/img/share.png" />
+        <img src="/img/like.png" />
+        <span>{{ detailsItem.name }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped lang="stylus">
-#body 
+*
+  transition all 2s
+#wwlist 
   position relative
-  height: 0;
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  #quicksearchbar
-    min-height 4em
-    background #D9D9D9
-    overflow-x auto
-    overflow-y hidden
-    white-space: nowrap;
-    button
-      list-style none
-      height 3em
-      margin .5em
-      display inline-block
-      background #fff
-      border-radius 5px
-      padding 0 10px
-      // line-height 3em
+  overflow auto
+  #details
+    position fixed
+    top 0
+    left 0
+    height 100%
+    width 100%
+    z-index 1
+    background #00000085
+    padding-top 15%
+    img
+      height 80%
+      width 100%
+      object-fit contain
+    #handlebar
+      text-align: left;
+      line-height 4em
+      img 
+        vertical-align: bottom;
+        height 4em
+        width 4em
+        border-radius 15px
+        margin 1em
       span
-        font-size 2em
+        color #fff
+        font-size 3em
+  #wwBox
+    padding 1.5vw
+    overflow auto
+    button
+      border-radius 5px
+      width 45vw
+      height 45vw
+      margin 1.5vw
+      img
+        height 90%
+        width 90%
+        object-fit cover
+        border-radius 5px
 
 </style>
