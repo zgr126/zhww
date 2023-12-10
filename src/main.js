@@ -1,10 +1,8 @@
-import { createApp } from 'vue'
-import './style.styl'
-import App from './App.vue'
-import router from './router'
-// import {register} from './utils/common'
+import { createApp } from "vue";
+import "./style.styl";
+import App from "./App.vue";
+import router from "./router";
 
-const app = createApp(App)
-app.use(router)
-// app.use(register)
-app.mount('#app')
+const app = createApp(App);
+app.use(router);
+app.mount("#app");
