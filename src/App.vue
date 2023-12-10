@@ -1,14 +1,18 @@
 <script setup>
+let route = route.name
 </script>
 
 <template>
-  <div class="router">
-    <router-view ></router-view>
+  <div v-if="route.name.indexOf('admin')!=-1">
+    <div class="router">
+      <router-view ></router-view>
+    </div>
+    <div id="navBtn">
+      <button>首页</button>
+      <button>我的</button>
+    </div>
   </div>
-  <div id="navBtn">
-    <button>首页</button>
-    <button>我的</button>
-  </div>
+  
 </template>
 
 <style scoped lang="stylus">

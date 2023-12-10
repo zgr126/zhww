@@ -6,6 +6,7 @@ const routes = [
   { path: '/', component: import('./pages/home.vue') },
   { path: '/me', component: import('./pages/me.vue') },
   { path: '/wwLst', component: import('./pages/wwLst.vue') },
+  { path: '/admin', component: import('./admin/main.vue') },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
