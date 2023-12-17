@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import {onMounted, ref} from 'vue'
 let route = useRoute()
 let router = useRouter()
 
@@ -9,24 +10,40 @@ let toHome = e => {
 let toMe = e => {
   router.push('/me')
 }
+onMounted(e=>{
+  // let routeName = route.name
+  console.log(route)
+})
+// let mode = 'admin'
+let mode = 'adminm'
 </script>
 
 <template>
-  <div class="router">
-    <router-view></router-view>
+  <!-- <div v-if="mode == 'admin'">
+    ss
   </div>
-  <div id="navBtn">
-    <button class="blackBtn" :class="{ gray: route.name !== 'home' }" @click="toHome">
-      <span>首页</span>
-    </button>
-    <button :class="{ gray: route.name !== 'me' }" @click="toMe">
-      <span>我的</span>
-    </button>
-  </div>
+  <div id="container" v-else> -->
+    <div class="router">
+      <router-view></router-view>
+    </div>
+    <div id="navBtn">
+      <button class="blackBtn" :class="{ gray: route.name !== 'home' }" @click="toHome">
+        <span>首页</span>
+      </button>
+      <button :class="{ gray: route.name !== 'me' }" @click="toMe">
+        <span>我的</span>
+      </button>
+    </div>
+  <!-- </div> -->
+  
   
 </template>
 
 <style scoped lang="stylus">
+#container
+  // height 100%
+  display flex
+  flex-direction column 
 .gray
   span
     filter: opacity(50%)

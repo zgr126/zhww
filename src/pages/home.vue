@@ -13,6 +13,7 @@ let search = e => {
   if (value === '') return
   toList(value)
 }
+console.log('ss')
 </script>
 
 <template>
