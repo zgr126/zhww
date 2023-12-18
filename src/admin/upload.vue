@@ -36,6 +36,7 @@ const uploadFile = (e) => {
     console.log('ok')
     console.log(e)
     isUpload = false
+    fileList.value = []
   }).catch(e => {
     console.log(e)
     isUpload = false

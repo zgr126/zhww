@@ -11,7 +11,8 @@ let toMe = e => {
   router.push('/me')
 }
 onMounted(e=>{
-  // let routeName = route.name
+  let routeName = route
+  console.log(routeName)
   console.log(route)
 })
 // let mode = 'admin'
@@ -26,7 +27,7 @@ let mode = 'adminm'
     <div class="router">
       <router-view></router-view>
     </div>
-    <div id="navBtn">
+    <div id="navBtn" v-if="route.path != '/admin'">
       <button class="blackBtn" :class="{ gray: route.name !== 'home' }" @click="toHome">
         <span>首页</span>
       </button>
