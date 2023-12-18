@@ -1,20 +1,20 @@
 <script setup>
 import axios from 'axios'
 import upload from './upload.vue'
-const testHomeGet = (e)=>{
-  axios.get('').then(e=>{
+const testHomeGet = (e) => {
+  axios.get('').then(e => {
     console.log(e)
   })
 }
-const testListGet = (e)=>{
-  axios.get('goods').then(e=>{
+const testListGet = (e) => {
+  axios.get('goods').then(e => {
     console.log(e)
   })
 }
-const testListPost = e=>{
-  axios.post('goods',{
-    a:'b'
-  }).then(e=>{
+const testListPost = e => {
+  axios.post('goods', {
+    a: 'b'
+  }).then(e => {
     console.log(e)
   })
 }
@@ -33,7 +33,7 @@ const testListPost = e=>{
 .admintest
   display flex
 button
-  width 25%
+  // width 25%
   margin 10px
   display inline-block
 </style>
