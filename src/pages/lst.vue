@@ -1,19 +1,17 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 let route = useRoute()
 let router = useRouter()
-let wwLst = ref([
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-])
+let wwLst = ref([])
+const baseUrl = import.meta.env.APP_BASE_URL
+let refrushPage = e => {
+  axios.get('goods').then(e => {
+    wwLst.value = e.data?.data
+  })
+}
+refrushPage()
 console.log(route)
 console.log(route.query.searchVal)
 let searchVal = ref(route.query.searchVal || wwLst.value[0].name)
@@ -36,15 +34,15 @@ let back = e => {
   <div id="wwlist">
     <div id="wwBox">
       <button v-for="(item, index) of wwLst" @click="showDetails(item)">
-        <img :src="item.url">
+        <img :src="`${baseUrl}/static/${item.url}`">
       </button>
     </div>
-    <div id="details" v-if="detailsItem" @click="closeDetails">
-      <img :src="detailsItem.url" />
+    <div id="details" v-if="item" @click="closeDetails">
+      <img :src="`${baseUrl}/static/${item.url}`" />
       <div id="handlebar">
         <img src="/img/share.png" />
         <img src="/img/like.png" />
-        <span>{{ detailsItem.name }}</span>
+        <span>{{ item.name }}</span>
       </div>
     </div>
   </div>

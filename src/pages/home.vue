@@ -62,6 +62,7 @@ $defaultPadding = 5px
   position absolute
   left 0
   bottom 0
+  width 100%
   img
     width 100%
   .mainbtns
@@ -74,8 +75,9 @@ $defaultPadding = 5px
       background #fff
       margin $defaultPadding
     button
-      font-size 2em
+      font-size 1.8em
       flex 1
+      white-space nowrap
       p
         margin 0
     .blackBtn
@@ -86,7 +88,7 @@ $defaultPadding = 5px
     input 
       flex auto
     .imgbtn
-      font-size 2.5em
+      font-size 2.2em
       img
         // height 30vw
         width 40vw

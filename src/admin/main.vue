@@ -18,6 +18,7 @@ const testListPost = e => {
     console.log(e)
   })
 }
+
 </script>
 
 <template>
