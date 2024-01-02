@@ -18,6 +18,12 @@ const testListPost = e => {
     console.log(e)
   })
 }
+const testsomePost = (e) => {
+  axios.get('testsomePost').then(e => {
+    console.log(e)
+  })
+}
+
 
 </script>
 
@@ -26,6 +32,7 @@ const testListPost = e => {
     <button @click="testHomeGet">测试/get查询</button>
     <button @click="testListGet">测试列表get查询</button>
     <button @click="testListPost">测试列表post查询</button>
+    <button @click="testsomePost">测试随意get查询</button>
   </div>
   <upload></upload>
 </template>

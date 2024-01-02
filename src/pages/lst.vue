@@ -14,7 +14,7 @@ let refrushPage = e => {
 refrushPage()
 console.log(route)
 console.log(route.query.searchVal)
-let searchVal = ref(route.query.searchVal || wwLst.value[0].name)
+let searchVal = ref(route.query.searchVal)
 let quikSearchLst = ref(['史迪仔', '库洛米', '皮卡丘', '史迪仔', '库洛米', '皮卡丘'])
 // 测试弹框
 let detailsItem = ref(null)
@@ -34,15 +34,15 @@ let back = e => {
   <div id="wwlist">
     <div id="wwBox">
       <button v-for="(item, index) of wwLst" @click="showDetails(item)">
-        <img :src="`${baseUrl}/static/${item.url}`">
+        <img :src="`${baseUrl}static/${item.url}`">
       </button>
     </div>
-    <div id="details" v-if="item" @click="closeDetails">
-      <img :src="`${baseUrl}/static/${item.url}`" />
+    <div id="details" v-if="detailsItem" @click="closeDetails">
+      <img :src="`${baseUrl}static/${detailsItem.url}`" />
       <div id="handlebar">
         <img src="/img/share.png" />
         <img src="/img/like.png" />
-        <span>{{ item.name }}</span>
+        <span>{{ detailsItem.name }}</span>
       </div>
     </div>
   </div>
