@@ -3,20 +3,12 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
 const routes = [
-  { path: "/", name: "home", component: (e) => import("./pages/home.vue") },
-  { path: "/me", name: "me", component: (e) => import("./pages/me.vue") },
+  { path: "/", redirect: { name: "goods" } },
+  { path: "/goods", name: "goods", component: (e) => import("./goods.vue") },
   {
-    path: "/wwLst",
-    name: "wwLst",
-    component: (e) => import("./pages/wwLst.vue"),
-  },
-  {
-    path: "/admin",
-    component: import("./admin/main.vue"),
-    children: [
-      { path: "goods", name: "goods", component: import("./admin/goods.vue") },
-      { path: "tags", name: "tags", component: import("./admin/tags.vue") },
-    ],
+    path: "/tags",
+    name: "tags",
+    component: (e) => import("./tags.vue"),
   },
 ];
 

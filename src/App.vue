@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import {onMounted, ref} from 'vue'
+import { onMounted, ref } from 'vue'
+import adminPage from './admin/main.vue'
 let route = useRoute()
 let router = useRouter()
 
@@ -10,34 +11,32 @@ let toHome = e => {
 let toMe = e => {
   router.push('/me')
 }
-onMounted(e=>{
+onMounted(e => {
   let routeName = route
   console.log(routeName)
   console.log(route)
 })
 // let mode = 'admin'
-let mode = 'adminm'
+
 </script>
 
 <template>
-  <!-- <div v-if="mode == 'admin'">
-    ss
+  <div class="router" v-if="!isAdmin">
+    <router-view></router-view>
   </div>
-  <div id="container" v-else> -->
-    <div class="router">
-      <router-view></router-view>
-    </div>
-    <div id="navBtn" v-if="route.path != '/admin'">
-      <button class="blackBtn" :class="{ gray: route.name !== 'home' }" @click="toHome">
-        <span>首页</span>
-      </button>
-      <button :class="{ gray: route.name !== 'me' }" @click="toMe">
-        <span>我的</span>
-      </button>
-    </div>
+  <div id="navBtn" v-if="!isAdmin">
+    <button class="blackBtn" :class="{ gray: route.name !== 'home' }" @click="toHome">
+      <span>首页</span>
+    </button>
+    <button :class="{ gray: route.name !== 'me' }" @click="toMe">
+      <span>我的</span>
+    </button>
+  </div>
+  <div v-if="isAdmin">
+    <adminPage></adminPage>
+  </div>
+
   <!-- </div> -->
-  
-  
 </template>
 
 <style scoped lang="stylus">

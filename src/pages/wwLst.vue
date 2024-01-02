@@ -2,23 +2,13 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Lst from './lst.vue'
+import axios from 'axios';
 let route = useRoute()
 let router = useRouter()
-let wwLst = ref([
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-  { id: 0, name: '史迪仔', url: '/img/itembk.png' },
-])
 console.log(route)
 console.log(route.query.searchVal)
-let searchVal = ref(route.query.searchVal || wwLst.value[0].name)
-let quikSearchLst = ref(['史迪仔', '库洛米', '皮卡丘', '史迪仔', '库洛米', '皮卡丘'])
+let searchVal = ref(route.query.searchVal)
+let quikSearchLst = ref([])
 // 测试弹框
 let detailsItem = ref(null)
 let showDetails = e => {
@@ -31,6 +21,29 @@ let closeDetails = e => {
 let back = e => {
   router.push({ name: 'home' })
 }
+let isAdmin = window.isAdmin
+let dialogTableVisible = ref(false)
+let newTagValue = ref('')
+let newTag = async (e) => {
+  let v = newTagValue.value
+  let result = await axios.post('tags', { tag: v })
+  newTagValue.value = ''
+  dialogTableVisible.value = false
+  getTags()
+}
+let getTags = async e => {
+  let data = await axios.get('tags')
+  quikSearchLst.value = data.data.data
+}
+getTags()
+let dialogDeleteVisible = ref(false)
+let deleteTag = async e => {
+  console.log(deleteItem.value)
+  let data = await axios.delete('tags', { data: deleteItem.value })
+  dialogDeleteVisible.value = false
+  getTags()
+}
+let deleteItem = ref(null)
 </script>
 
 <template>
@@ -40,12 +53,22 @@ let back = e => {
   </div>
   <div id="body">
     <div id="quicksearchbar">
-      <button v-for="(item, index) of quikSearchLst">
-        <span>{{ item }}</span>
-      </button>
+      <div v-if="isAdmin" @click="dialogTableVisible = true"><span>+</span></div>
+      <div v-for="(item, index) of quikSearchLst">
+        <span>{{ item.tag }}</span>
+        <button class="delete" @click="e => { deleteItem = item; dialogDeleteVisible = true }">删除</button>
+      </div>
     </div>
     <Lst></Lst>
   </div>
+  <el-dialog v-model="dialogDeleteVisible" title="删除标签">
+    确定删除?
+    <el-button @click="deleteTag">是</el-button>
+  </el-dialog>
+  <el-dialog v-model="dialogTableVisible" title="添加标签">
+    <el-input v-model="newTagValue" placeholder="输入tag" />
+    <el-button @click="newTag">提交</el-button>
+  </el-dialog>
 </template>
 
 <style scoped lang="stylus">
@@ -61,7 +84,8 @@ let back = e => {
     overflow-x auto
     overflow-y hidden
     white-space: nowrap;
-    button
+    text-align left
+    div
       list-style none
       height 3em
       margin .5em
@@ -69,8 +93,20 @@ let back = e => {
       background #fff
       border-radius 5px
       padding 0 10px
+      position relative
+      color $main_color
       // line-height 3em
       span
         font-size 2em
+      // delete
+      // button
+      //   color #fff
+      //   position absolute
+      //   top -20px
+      //   right -20px
+      //   height 30px
+      //   width 30px
+      //   background red
+      //   border-radius 50px
 
 </style>
