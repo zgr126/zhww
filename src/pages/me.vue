@@ -8,7 +8,7 @@ import Lst from './lst.vue'
       <img src="/img/logobig.png">
     </div>
     <div class="name">
-      <span>预防选</span>
+      <span>我的</span>
     </div>
   </div>
   <div class="sou">
@@ -16,7 +16,7 @@ import Lst from './lst.vue'
     <img src="/img/like.png" />
   </div>
   <div id="wws">
-    <Lst></Lst>
+    <Lst page="me"></Lst>
   </div>
 </template>
 

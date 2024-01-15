@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Lst from './lst.vue'
 import axios from 'axios';
+import { ElMessage } from 'element-plus'
 let route = useRoute()
 let router = useRouter()
 console.log(route)
@@ -29,6 +30,7 @@ let newTag = async (e) => {
   let result = await axios.post('tags', { tag: v })
   newTagValue.value = ''
   dialogTableVisible.value = false
+  ElMessage('添加成功')
   getTags()
 }
 let getTags = async e => {
@@ -41,6 +43,7 @@ let deleteTag = async e => {
   console.log(deleteItem.value)
   let data = await axios.delete('tags', { data: deleteItem.value })
   dialogDeleteVisible.value = false
+  ElMessage('删除成功')
   getTags()
 }
 let deleteItem = ref(null)
@@ -56,7 +59,7 @@ let deleteItem = ref(null)
       <div v-if="isAdmin" @click="dialogTableVisible = true"><span>+</span></div>
       <div v-for="(item, index) of quikSearchLst">
         <span>{{ item.tag }}</span>
-        <button class="delete" @click="e => { deleteItem = item; dialogDeleteVisible = true }">删除</button>
+        <button v-if="isAdmin" class="delete" @click="e => { deleteItem = item; dialogDeleteVisible = true }">删除</button>
       </div>
     </div>
     <Lst></Lst>

@@ -13,6 +13,10 @@ axios.defaults.baseURL = import.meta.env.APP_BASE_URL;
 
 window.isAdmin = document.location.pathname.indexOf("admin") != -1;
 
+let v = localStorage.getItem("likeList");
+if (!v) {
+  localStorage.setItem("likeList", JSON.stringify([]));
+}
 // let app;
 
 // if (isAdmin) {

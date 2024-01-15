@@ -1,17 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import upload from './upload.vue'
+import { ElMessage } from 'element-plus'
+let props = defineProps(['page'])
 let route = useRoute()
 let router = useRouter()
 let wwLst = ref([])
 let isAdmin = window.isAdmin
 const baseUrl = import.meta.env.APP_BASE_URL
 let refrushPage = e => {
-  axios.get('goods').then(e => {
-    wwLst.value = e.data?.data
-  })
+  if (props.page === 'me') {
+    wwLst.value = JSON.parse(localStorage.getItem('likeList'))
+  } else {
+    axios.get('goods').then(e => {
+      wwLst.value = e.data?.data
+    })
+  }
+
 }
 refrushPage()
 console.log(route)
@@ -45,7 +52,12 @@ let removeTag = e => {
   detailsTags.value.splice(e, 1)
   filterAll()
 }
-
+let like = e => {
+  let List = localStorage.getItem('likeList')
+  List = JSON.parse(List)
+  List.push(detailsItem.value)
+  localStorage.setItem('likeList', JSON.stringify(List))
+}
 let selectTagList = ref([])
 let filterAll = e => {
 
@@ -64,6 +76,10 @@ let save = async e => {
   detailsItem.value.tags = detailsTags.value
   let result = await axios.put('goods', detailsItem.value)
   console.log(result)
+  ElMessage({
+    type: 'success',
+    message: '保存成功'
+  })
 }
 </script>
 
@@ -96,7 +112,7 @@ let save = async e => {
         $event.preventDefault()
       }">
         <img src="/img/share.png" />
-        <img src="/img/like.png" />
+        <img src="/img/like.png" @click="like" />
         <span>{{ detailsItem.name }}</span>
       </div>
     </div>
