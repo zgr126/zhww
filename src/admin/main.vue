@@ -4,24 +4,24 @@ import upload from './upload.vue'
 import { useRouter } from 'vue-router';
 const route = useRouter()
 const testHomeGet = (e) => {
-  axios.get('').then(e => {
+  axios.get('/').then(e => {
     console.log(e)
   })
 }
 const testListGet = (e) => {
-  axios.get('goods').then(e => {
+  axios.get('/goods').then(e => {
     console.log(e)
   })
 }
 const testListPost = e => {
-  axios.post('goods', {
+  axios.post('/goods', {
     a: 'b'
   }).then(e => {
     console.log(e)
   })
 }
 const testsomePost = (e) => {
-  axios.get('testsomePost').then(e => {
+  axios.get('/testsomePost').then(e => {
     console.log(e)
   })
 }

@@ -8,8 +8,10 @@ import axios from "axios";
 
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-
-axios.defaults.baseURL = import.meta.env.APP_BASE_URL;
+const baseURL = import.meta.env.APP_BASE_URL;
+window.baseURL = baseURL;
+console.log(baseURL);
+axios.defaults.baseURL = baseURL;
 
 window.isAdmin = document.location.pathname.indexOf("admin") != -1;
 

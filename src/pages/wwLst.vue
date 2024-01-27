@@ -27,26 +27,36 @@ let dialogTableVisible = ref(false)
 let newTagValue = ref('')
 let newTag = async (e) => {
   let v = newTagValue.value
-  let result = await axios.post('tags', { tag: v })
+  let result = await axios.post('/tags', { tag: v })
   newTagValue.value = ''
   dialogTableVisible.value = false
   ElMessage('添加成功')
   getTags()
 }
 let getTags = async e => {
-  let data = await axios.get('tags')
+  let data = await axios.get('/tags')
   quikSearchLst.value = data.data.data
 }
 getTags()
 let dialogDeleteVisible = ref(false)
 let deleteTag = async e => {
   console.log(deleteItem.value)
-  let data = await axios.delete('tags', { data: deleteItem.value })
+  let data = await axios.delete('/tags', { data: deleteItem.value })
   dialogDeleteVisible.value = false
   ElMessage('删除成功')
   getTags()
 }
+
 let deleteItem = ref(null)
+
+let lst = ref(null)
+let search = e => {
+  // router.push({ name: 'wwLst', query: { searchVal: e.tag } })
+  // router.go(0)
+  searchVal.value = e.tag
+  console.dir(lst.value)
+  lst.value.refrushPage()
+}
 </script>
 
 <template>
@@ -57,12 +67,12 @@ let deleteItem = ref(null)
   <div id="body">
     <div id="quicksearchbar">
       <div v-if="isAdmin" @click="dialogTableVisible = true"><span>+</span></div>
-      <div v-for="(item, index) of quikSearchLst">
+      <div v-for="(item, index) of quikSearchLst" @click="search(item)">
         <span>{{ item.tag }}</span>
         <button v-if="isAdmin" class="delete" @click="e => { deleteItem = item; dialogDeleteVisible = true }">删除</button>
       </div>
     </div>
-    <Lst></Lst>
+    <Lst ref="lst" :search="searchVal"></Lst>
   </div>
   <el-dialog v-model="dialogDeleteVisible" title="删除标签">
     确定删除?

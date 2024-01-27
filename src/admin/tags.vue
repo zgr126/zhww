@@ -2,24 +2,24 @@
 import axios from 'axios'
 import upload from './upload.vue'
 const testHomeGet = (e) => {
-  axios.get('').then(e => {
+  axios.get('/').then(e => {
     console.log(e)
   })
 }
 const testListGet = (e) => {
-  axios.get('goods').then(e => {
+  axios.get('/goods').then(e => {
     console.log(e)
   })
 }
 const testListPost = e => {
-  axios.post('goods', {
+  axios.post('/goods', {
     a: 'b'
   }).then(e => {
     console.log(e)
   })
 }
 const testsomePost = (e) => {
-  axios.get('testsomePost').then(e => {
+  axios.get('/testsomePost').then(e => {
     console.log(e)
   })
 }

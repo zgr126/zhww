@@ -5,12 +5,12 @@ import { ref } from 'vue'
 import { formatDate } from '../utils/common'
 let tableData = ref([])
 const testHomeGet = (e) => {
-  axios.get('').then(e => {
+  axios.get('/').then(e => {
     console.log(e)
   })
 }
 const testListGet = (e) => {
-  axios.get('goods').then(e => {
+  axios.get('/goods').then(e => {
     let data = e.data.data
     data.map(e => { e.createTime = formatDate(e.createTime) })
     tableData.value = data
@@ -20,14 +20,14 @@ const testListGet = (e) => {
 }
 testListGet()
 const testListPost = e => {
-  axios.post('goods', {
+  axios.post('/goods', {
     a: 'b'
   }).then(e => {
     console.log(e)
   })
 }
 const testsomePost = (e) => {
-  axios.get('testsomePost').then(e => {
+  axios.get('/testsomePost').then(e => {
     console.log(e)
   })
 }

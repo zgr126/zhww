@@ -4,20 +4,32 @@ import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import upload from './upload.vue'
 import { ElMessage } from 'element-plus'
-let props = defineProps(['page'])
+let props = defineProps(['page', 'search'])
 let route = useRoute()
 let router = useRouter()
 let wwLst = ref([])
 let isAdmin = window.isAdmin
-const baseUrl = import.meta.env.APP_BASE_URL
+const baseUrl = import.meta.env.APP_BASE_URL || document.location.origin + '/'
 let refrushPage = e => {
-  if (props.page === 'me') {
-    wwLst.value = JSON.parse(localStorage.getItem('likeList'))
-  } else {
-    axios.get('goods').then(e => {
-      wwLst.value = e.data?.data
-    })
+  console.log(props.search)
+  let url = '/goods'
+  if (props.search) {
+    url += `?search=${props.search}`
   }
+  axios.get(url).then(e => {
+    wwLst.value = e.data?.data
+    if (props.page === 'me') {
+      let value = JSON.parse(localStorage.getItem('likeList'))
+      let lst = []
+      value.map(e => {
+        let f = wwLst.value.find(v => { return v._id === e._id })
+        if (f) {
+          lst.push(f)
+        }
+      })
+      wwLst.value = lst
+    }
+  })
 
 }
 refrushPage()
@@ -40,7 +52,7 @@ let back = e => {
   router.push({ name: 'home' })
 }
 let getTags = async e => {
-  let data = await axios.get('tags')
+  let data = await axios.get('/tags')
   quikSearchLst.value = data.data.data
 }
 getTags()
@@ -52,11 +64,35 @@ let removeTag = e => {
   detailsTags.value.splice(e, 1)
   filterAll()
 }
+let deleteGood = async (e, item) => {
+  console.log(e)
+  e.stopPropagation()
+  e.preventDefault()
+  let data = await axios.delete('/goods', { data: item })
+  console.log(data)
+  refrushPage()
+}
 let like = e => {
+
   let List = localStorage.getItem('likeList')
   List = JSON.parse(List)
-  List.push(detailsItem.value)
-  localStorage.setItem('likeList', JSON.stringify(List))
+  let f = List.findIndex(e => { return e._id === detailsItem.value._id })
+  console.log(f)
+  if (f == -1) {
+    List.push(detailsItem.value)
+    localStorage.setItem('likeList', JSON.stringify(List))
+    ElMessage({
+      message: '收藏成功',
+      type: 'success',
+    })
+  } else {
+    ElMessage({
+      message: '已取消收藏',
+      type: 'success',
+    })
+    List.splice(f, 1)
+    localStorage.setItem('likeList', JSON.stringify(List))
+  }
 }
 let selectTagList = ref([])
 let filterAll = e => {
@@ -74,7 +110,7 @@ let setTag = e => {
 }
 let save = async e => {
   detailsItem.value.tags = detailsTags.value
-  let result = await axios.put('goods', detailsItem.value)
+  let result = await axios.put('/goods', detailsItem.value)
   console.log(result)
   ElMessage({
     type: 'success',
@@ -89,6 +125,15 @@ let save = async e => {
       <upload v-if="isAdmin" @uploadOk="uploadOk"></upload>
       <button v-for="(item, index) of wwLst" @click="showDetails(item)">
         <img :src="`${baseUrl}static/${item.url}`">
+        <el-popconfirm title="Are you sure to delete this?" @confirm="deleteGood($event, item)">
+          <template #reference>
+            <button class="delete" @click="$event => {
+              $event.stopPropagation()
+              $event.preventDefault()
+            }">删除</button>
+          </template>
+        </el-popconfirm>
+
       </button>
     </div>
     <div id="details" v-if="detailsItem" @click="closeDetails">
@@ -167,15 +212,20 @@ let save = async e => {
     overflow auto
     display flex
     flex-wrap wrap
-    button
+    
+    >button
       border-radius 5px
       width 45vw
       height 45vw
       margin 1.5vw
+      position relative
       img
         height 90%
         width 90%
         object-fit cover
         border-radius 5px
-
+      .delete
+        position absolute
+        top 0
+        left 0
 </style>
