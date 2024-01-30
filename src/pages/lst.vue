@@ -132,7 +132,7 @@ defineExpose({ refrushPage })
       <upload v-if="isAdmin" @uploadOk="uploadOk"></upload>
       <button v-for="(item, index) of wwLst" @click="showDetails(item)">
         <img :src="`${baseUrl}static/${item.url}`">
-        <el-popconfirm title="Are you sure to delete this?" @confirm="deleteGood($event, item)">
+        <el-popconfirm title="Are you sure to delete this?" v-if="isAdmin" @confirm="deleteGood($event, item)">
           <template #reference>
             <button class="delete" @click="$event => {
               $event.stopPropagation()

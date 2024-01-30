@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router';
 const route = useRouter()
 let toList = (str) => {
@@ -14,6 +14,18 @@ let search = e => {
   toList(value)
 }
 console.log('ss')
+onMounted(e => {
+  window.onresize = e => {
+    if (window.innerHeight < 515) {
+      document.getElementsByClassName('body')[0].style.bottom = '-103px'
+    } else {
+      document.getElementsByClassName('body')[0].style.bottom = '0'
+    }
+  }
+})
+onBeforeUnmount(e => {
+  window.onresize = undefined
+})
 </script>
 
 <template>
@@ -68,6 +80,7 @@ $defaultPadding = 5px
   .mainbtns
     margin 0 $defaultPadding
     display flex
+    max-width: calc(100% - $defaultPadding*2);
     button,input
       border-radius 5px
       border 0
@@ -104,7 +117,7 @@ $defaultPadding = 5px
   display inline-block
   will-change: filter;
   transition: filter 300ms;
-
+  z-index: 1
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
