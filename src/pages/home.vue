@@ -36,7 +36,7 @@ onBeforeUnmount(e => {
     </div>
     <div class="mainbtns">
       <input v-model="inputV" />
-      <button class="blackBtn" @click="search">搜索</button>
+      <button class="blackBtn search" @click="search">搜索</button>
     </div>
     <div class="mainbtns">
       <button class="imgbtn redBtn" @click="toList('热门')">
@@ -80,7 +80,8 @@ $defaultPadding = 5px
   .mainbtns
     margin 0 $defaultPadding
     display flex
-    max-width: calc(100% - $defaultPadding*2);
+    max-width 'calc(100%  - %s)' % ($defaultPadding * 2)
+    
     button,input
       border-radius 5px
       border 0
@@ -99,7 +100,12 @@ $defaultPadding = 5px
     .redBtn
       color $main_color
     input 
-      flex auto
+      flex 1
+      width 0
+      font-size 2rem
+    .search
+      flex none
+      width 100px
     .imgbtn
       font-size 2.2em
       img
