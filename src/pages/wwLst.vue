@@ -62,7 +62,7 @@ let search = e => {
 <template>
   <div id="navBtn">
     <button class="blackBtn" @click="back">返回</button>
-    <button>{{ searchVal }}</button>
+    <button>{{ searchVal || '全部' }}</button>
   </div>
   <div id="body">
     <div id="quicksearchbar">

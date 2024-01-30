@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import upload from './upload.vue'
@@ -33,9 +33,15 @@ let refrushPage = e => {
 
 }
 refrushPage()
+
 console.log(route)
 console.log(route.query.searchVal)
 let searchVal = ref(route.query.searchVal)
+watch(props.search,
+  (n) => {
+    console.log(n)
+  }
+)
 let quikSearchLst = ref([])
 // 测试弹框
 let detailsItem = ref(null)
@@ -117,6 +123,7 @@ let save = async e => {
     message: '保存成功'
   })
 }
+defineExpose({ refrushPage })
 </script>
 
 <template>

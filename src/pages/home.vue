@@ -10,7 +10,7 @@ let toList = (str) => {
 let inputV = ref('')
 let search = e => {
   let value = inputV.value.trim()
-  if (value === '') return
+  // if (value === '') return
   toList(value)
 }
 console.log('ss')

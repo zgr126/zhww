@@ -31,7 +31,7 @@ const uploadFile = (e) => {
   for (let i = 0; i < fileList.value.length; i++) {
     var bodyFormData = new FormData();
     bodyFormData.append('file', fileList.value[i].raw)
-    let post = axios.post('//upload', bodyFormData, {
+    let post = axios.post('/upload', bodyFormData, {
       headers: { "Content-Type": "multipart/form-data" }
     })
     promiseLst.push(post)
